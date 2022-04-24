@@ -4,7 +4,11 @@ import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { getOrderDetails, deliverOrder } from "../actions/orderActions";
+import {
+   getOrderDetails,
+   deliverOrder,
+   payOrder,
+} from "../actions/orderActions";
 import { ORDER_DELIVER_RESET } from "../constants/orderConstants";
 
 const OrderScreen = () => {
@@ -17,6 +21,9 @@ const OrderScreen = () => {
 
    const orderDeliver = useSelector((state) => state.orderDeliver);
    const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
+
+   const orderPay = useSelector((state) => state.orderPay);
+   const { loading: loadingPayment, success: successPayment } = orderPay;
 
    const userLogin = useSelector((state) => state.userLogin);
    const { userInfo } = userLogin;
@@ -38,10 +45,14 @@ const OrderScreen = () => {
       }
       dispatch(getOrderDetails(id));
       dispatch({ type: ORDER_DELIVER_RESET });
-   }, [dispatch, id, successDeliver, history, userInfo]);
+   }, [dispatch, id, successDeliver, successPayment, history, userInfo]);
 
    const deliverHandler = () => {
       dispatch(deliverOrder(order));
+   };
+
+   const paymentHandler = () => {
+      dispatch(payOrder(order));
    };
 
    return loading ? (
@@ -158,18 +169,35 @@ const OrderScreen = () => {
                            <Col>Rs.{order.totalPrice}</Col>
                         </Row>
                      </ListGroup.Item>
-                     {loadingDeliver && <Loader />}
-                     {userInfo && userInfo.isAdmin && !order.isDelivered && (
+
+                     {loadingPayment && <Loader />}
+                     {userInfo && userInfo.isAdmin && !order.isPaid && (
                         <ListGroup.Item>
                            <Button
                               type='button'
                               className='btn btn-block'
-                              onClick={deliverHandler}
+                              onClick={paymentHandler}
                            >
-                              Mark As Delivered
+                              Mark As Paid
                            </Button>
                         </ListGroup.Item>
                      )}
+
+                     {loadingDeliver && <Loader />}
+                     {userInfo &&
+                        userInfo.isAdmin &&
+                        !order.isDelivered &&
+                        order.isPaid && (
+                           <ListGroup.Item>
+                              <Button
+                                 type='button'
+                                 className='btn btn-block'
+                                 onClick={deliverHandler}
+                              >
+                                 Mark As Delivered
+                              </Button>
+                           </ListGroup.Item>
+                        )}
                   </ListGroup>
                </Card>
             </Col>

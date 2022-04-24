@@ -28,7 +28,7 @@ const OrderListScreen = () => {
 
    return (
       <>
-         <h1>Orders</h1>
+         <h1 className='py-3'>Orders</h1>
          {loading ? (
             <Loader />
          ) : error ? (

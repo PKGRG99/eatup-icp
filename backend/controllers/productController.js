@@ -106,6 +106,10 @@ const createProductReview = asyncHandler(async (req, res) => {
          throw new Error("Product already reviewed");
       }
 
+      // if (res.status(500)) {
+      //    throw new Error("Please write a review first.");
+      // }
+
       const review = {
          name: req.user.name,
          rating: Number(rating),

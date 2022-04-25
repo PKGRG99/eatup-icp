@@ -12,6 +12,7 @@ import {
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import { Rating as Star } from "react-simple-star-rating";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -19,6 +20,7 @@ import {
    createProductReview,
 } from "../actions/productActions";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
+import { BsChevronCompactLeft } from "react-icons/bs";
 
 const ProductScreen = () => {
    let { id } = useParams();
@@ -57,6 +59,12 @@ const ProductScreen = () => {
    // Event Handler
    const addToCartHandler = () => {
       history(`/cart/${id}?qty=${qty}`);
+   };
+
+   const handleRating = (rate) => {
+      let rating = rate / 20;
+      setRating(rating);
+      console.log(rating);
    };
 
    const submitHandler = (e) => {
@@ -182,22 +190,22 @@ const ProductScreen = () => {
 
                <Row>
                   <Col md={6} className='my-2'>
-                     <h2 className='py-3'>Reviews</h2>
+                     <h2 className='py-2'>Reviews</h2>
                      {product.reviews.length === 0 && (
                         <Message>No Comments.</Message>
                      )}
                      <ListGroup variant='flush'>
                         {product.reviews.map((review) => (
                            <ListGroup.Item key={review._id}>
-                              <h4 className='py-2'>{review.name}</h4>
+                              <h2 className='py-2'>{review.name}</h2>
                               <Rating value={review.rating} />
                               <p className='py-2'>
                                  {review.createdAt.substring(0, 10)}
                               </p>
-                              <h5>{review.comment}</h5>
+                              <h2 className='mb-3'>{review.comment}</h2>
                            </ListGroup.Item>
                         ))}
-                        <ListGroup.Item>
+                        <ListGroup.Item className='mt-3'>
                            <h2 className='py-2'>Write a Customer Review</h2>
                            {successProductReview && (
                               <Message variant='success'>
@@ -212,7 +220,7 @@ const ProductScreen = () => {
                            )}
                            {userInfo ? (
                               <Form onSubmit={submitHandler}>
-                                 <Form.Group
+                                 {/* <Form.Group
                                     controlId='rating'
                                     className='py-2'
                                  >
@@ -231,12 +239,38 @@ const ProductScreen = () => {
                                        <option value='4'>4 - Very Good</option>
                                        <option value='5'>5 - Excellent</option>
                                     </Form.Control>
-                                 </Form.Group>
+                                 </Form.Group> */}
+
                                  <Form.Group
-                                    controlId='comment'
+                                    controlId='rating'
                                     className='py-2'
                                  >
-                                    <Form.Label>Comment</Form.Label>
+                                    <Form.Label as='h4'>Rating</Form.Label>
+                                    <Star
+                                       ratingValue={rating}
+                                       onClick={handleRating}
+                                       size={30}
+                                       label
+                                       transition
+                                       fillColor='#f82825'
+                                       emptyColor='gray'
+                                       className='foo'
+                                       showTooltip
+                                       tooltipArray={[
+                                          "Terrible",
+                                          "Bad",
+                                          "Average",
+                                          "Great",
+                                          "Perfect",
+                                       ]}
+                                    />
+                                 </Form.Group>
+
+                                 <Form.Group
+                                    controlId='comment'
+                                    className='py-3'
+                                 >
+                                    <Form.Label as='h4'>Comment</Form.Label>
                                     <Form.Control
                                        as='textarea'
                                        row='3'
@@ -250,7 +284,7 @@ const ProductScreen = () => {
                                     disabled={loadingProductReview}
                                     type='submit'
                                     variant='primary'
-                                    className='py-2'
+                                    className='py-3 my-2'
                                  >
                                     Submit
                                  </Button>

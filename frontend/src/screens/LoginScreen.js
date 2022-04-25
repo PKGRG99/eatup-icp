@@ -18,8 +18,12 @@ const LoginScreen = () => {
    const { loading, error, userInfo } = userLogin;
 
    useEffect(() => {
-      if (userInfo) {
+      if (userInfo && userInfo.isAdmin) {
+         history("/admin/homepage");
+      } else if (userInfo) {
          history(redirect);
+      } else {
+         history("/login");
       }
    }, [userInfo, redirect, history]);
 

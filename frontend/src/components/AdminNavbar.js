@@ -2,12 +2,11 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import CartSVG from "../assets/cart.svg";
 import LoginSVG from "../assets/login.svg";
 import SearchBox from "./SearchBox";
 import { logout } from "../actions/userActions";
 
-const Header = () => {
+const AdminNavbar = () => {
    const userLogin = useSelector((state) => state.userLogin);
    const { userInfo } = userLogin;
    const dispatch = useDispatch();
@@ -20,21 +19,13 @@ const Header = () => {
       <header>
          <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
             <Container>
-               <LinkContainer to='/'>
+               <LinkContainer to='/admin/homepage'>
                   <Navbar.Brand>EAT UP</Navbar.Brand>
                </LinkContainer>
                <Navbar.Toggle aria-controls='basic-navbar-nav' />
                <Navbar.Collapse id='basic-navbar-nav'>
                   <SearchBox />
                   <Nav className='ms-auto'>
-                     {userInfo && !userInfo.isAdmin && (
-                        <LinkContainer to='/cart'>
-                           <Nav.Link>
-                              <img src={CartSVG} alt='Cart' /> Cart
-                           </Nav.Link>
-                        </LinkContainer>
-                     )}
-
                      {userInfo ? (
                         <NavDropdown title={userInfo.name} id='username'>
                            <LinkContainer to='/profile'>
@@ -72,4 +63,4 @@ const Header = () => {
    );
 };
 
-export default Header;
+export default AdminNavbar;

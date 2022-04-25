@@ -22,9 +22,9 @@ const HomeScreen = () => {
 
    return (
       <>
-         <h1 className='text-center py-4 text-uppercase'>Best Rated Foods</h1>
+         <h1 className='text-center py-3 text-uppercase'>Best Rated Foods</h1>
          <ProductCarousel />
-         <h1 className='text-center py-4'>BEST FOODS THIS YEAR</h1>
+         <h1 className='text-center py-3'>BEST FOODS THIS YEAR</h1>
          {loading ? (
             <Loader />
          ) : error ? (

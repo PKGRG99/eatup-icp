@@ -20,7 +20,6 @@ import {
    createProductReview,
 } from "../actions/productActions";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
-import { BsChevronCompactLeft } from "react-icons/bs";
 
 const ProductScreen = () => {
    let { id } = useParams();
@@ -197,12 +196,12 @@ const ProductScreen = () => {
                      <ListGroup variant='flush'>
                         {product.reviews.map((review) => (
                            <ListGroup.Item key={review._id}>
-                              <h2 className='py-2'>{review.name}</h2>
+                              <h3 className='py-2'>{review.name}</h3>
                               <Rating value={review.rating} />
                               <p className='py-2'>
                                  {review.createdAt.substring(0, 10)}
                               </p>
-                              <h2 className='mb-3'>{review.comment}</h2>
+                              <h3 className='mb-3'>{review.comment}</h3>
                            </ListGroup.Item>
                         ))}
                         <ListGroup.Item className='mt-3'>

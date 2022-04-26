@@ -37,10 +37,10 @@ const PaymentScreen = () => {
                <Col>
                   <Form.Check
                      type='radio'
-                     label='eSewa'
-                     id='eSewa'
+                     label='Khalti'
+                     id='khalti'
                      name='paymentMethod'
-                     value='eSewa'
+                     value='khalti'
                      className='py-3'
                      checked
                      onChange={(e) => setPaymentMethod(e.target.value)}

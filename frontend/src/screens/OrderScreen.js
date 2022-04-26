@@ -9,7 +9,9 @@ import {
    deliverOrder,
    payOrder,
 } from "../actions/orderActions";
+import config from "../components/khalti";
 import { ORDER_DELIVER_RESET } from "../constants/orderConstants";
+import KhaltiCheckout from "khalti-checkout-web";
 
 const OrderScreen = () => {
    let { id } = useParams();
@@ -52,6 +54,12 @@ const OrderScreen = () => {
    };
 
    const paymentHandler = () => {
+      dispatch(payOrder(order));
+      let checkout = new KhaltiCheckout(config);
+      checkout.show({ amount: order.totalPrice * 100 });
+   };
+
+   const adminPaymentHandler = () => {
       dispatch(payOrder(order));
    };
 
@@ -171,12 +179,26 @@ const OrderScreen = () => {
                      </ListGroup.Item>
 
                      {loadingPayment && <Loader />}
+                     {userInfo && !userInfo.isAdmin && !order.isPaid && (
+                        <ListGroup.Item>
+                           <Button
+                              type='button'
+                              className='btn btn-block py-3 my-2'
+                              onClick={paymentHandler}
+                              style={{ backgroundColor: "purple" }}
+                           >
+                              Pay with Khalti
+                           </Button>
+                        </ListGroup.Item>
+                     )}
+
+                     {loadingPayment && <Loader />}
                      {userInfo && userInfo.isAdmin && !order.isPaid && (
                         <ListGroup.Item>
                            <Button
                               type='button'
                               className='btn btn-block'
-                              onClick={paymentHandler}
+                              onClick={adminPaymentHandler}
                            >
                               Mark As Paid
                            </Button>

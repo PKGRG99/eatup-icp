@@ -91,8 +91,8 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 });
 
 // @desc Update order to paid
-// @route GET /api/orders/:id/pay
-// @access PRIVATE
+// @route PUT /api/orders/:id/pay
+// @access PUBLIC
 const updateOrderToPaid = asyncHandler(async (req, res) => {
    const order = await Order.findById(req.params.id);
 

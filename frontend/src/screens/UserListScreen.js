@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import { ImCross, ImCheckmark } from "react-icons/im";
@@ -44,47 +44,54 @@ const UserListScreen = () => {
          ) : error ? (
             <Message variant='danger'>{error}</Message>
          ) : (
-            <Table striped bordered hover responsive className='table-sm'>
-               <thead>
-                  <tr>
-                     <th>ID</th>
-                     <th>NAME</th>
-                     <th>EMAIL</th>
-                     <th>ADMIN</th>
-                     <th></th>
-                  </tr>
-               </thead>
-               <tbody>
-                  {users.map((user) => (
-                     <tr key={user._id}>
-                        <td>{user._id}</td>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td>
-                           {user.isAdmin ? (
-                              <ImCheckmark style={{ color: "green" }} />
-                           ) : (
-                              <ImCross style={{ color: "red" }} />
-                           )}
-                        </td>
-                        <td>
-                           <LinkContainer to={`/admin/user/${user._id}/edit`}>
-                              <Button variant='light' className='btn-sm'>
-                                 <MdModeEdit size={20} />
-                              </Button>
-                           </LinkContainer>
-                           <Button
-                              variant='danger'
-                              className='btn-sm'
-                              onClick={() => deleteHandler(user._id)}
-                           >
-                              <MdDelete size={20} />
-                           </Button>
-                        </td>
+            <>
+               <Link className='btn btn-dark my-2' to='/admin/homepage'>
+                  Homepage
+               </Link>
+               <Table striped bordered hover responsive className='table-sm'>
+                  <thead>
+                     <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>EMAIL</th>
+                        <th>ADMIN</th>
+                        <th></th>
                      </tr>
-                  ))}
-               </tbody>
-            </Table>
+                  </thead>
+                  <tbody>
+                     {users.map((user) => (
+                        <tr key={user._id}>
+                           <td>{user._id}</td>
+                           <td>{user.name}</td>
+                           <td>{user.email}</td>
+                           <td>
+                              {user.isAdmin ? (
+                                 <ImCheckmark style={{ color: "green" }} />
+                              ) : (
+                                 <ImCross style={{ color: "red" }} />
+                              )}
+                           </td>
+                           <td>
+                              <LinkContainer
+                                 to={`/admin/user/${user._id}/edit`}
+                              >
+                                 <Button variant='light' className='btn-sm'>
+                                    <MdModeEdit size={20} />
+                                 </Button>
+                              </LinkContainer>
+                              <Button
+                                 variant='danger'
+                                 className='btn-sm'
+                                 onClick={() => deleteHandler(user._id)}
+                              >
+                                 <MdDelete size={20} />
+                              </Button>
+                           </td>
+                        </tr>
+                     ))}
+                  </tbody>
+               </Table>
+            </>
          )}
       </>
    );

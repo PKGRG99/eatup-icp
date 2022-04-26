@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Paginate from "../components/Paginate";
@@ -94,6 +94,9 @@ const ProductListScreen = () => {
             <Message variant='danger'>{error}</Message>
          ) : (
             <>
+               <Link className='btn btn-dark my-2' to='/admin/homepage'>
+                  Homepage
+               </Link>
                <Table striped bordered hover responsive className='table-sm'>
                   <thead>
                      <tr>

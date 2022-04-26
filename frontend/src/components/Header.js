@@ -20,10 +20,17 @@ const Header = () => {
       <header>
          <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
             <Container>
-               {userInfo && !userInfo.isAdmin && (
+               {userInfo && !userInfo.isAdmin ? (
                   <LinkContainer to='/'>
                      <Navbar.Brand>EAT UP</Navbar.Brand>
                   </LinkContainer>
+               ) : (
+                  userInfo &&
+                  userInfo.isAdmin && (
+                     <LinkContainer to='/admin/homepage'>
+                        <Navbar.Brand>EAT UP</Navbar.Brand>
+                     </LinkContainer>
+                  )
                )}
 
                <Navbar.Toggle aria-controls='basic-navbar-nav' />

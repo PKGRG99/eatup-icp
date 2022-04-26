@@ -8,7 +8,7 @@ const AdminScreen = () => {
          <Row>
             <Col md={3} className='my-3 d-flex flex-column'>
                <h2 className='p-3'>Welcome, Admin.</h2>
-               <Link className='btn btn-dark m-3' to='/'>
+               <Link className='btn btn-dark m-3' to='/admin/homepage'>
                   Home Page
                </Link>
                <Link className='btn btn-dark m-3' to='/admin/userlist'>

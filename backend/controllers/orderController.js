@@ -109,6 +109,13 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
    }
 });
 
+const getTodayOrders = asyncHandler(async (req, res) => {
+   const orders = await Order.find({})
+      .sort({ created_at: 1 })
+      .populate("user", "id name");
+   res.json(orders);
+});
+
 export {
    addOrderItems,
    getOrderById,
@@ -116,4 +123,5 @@ export {
    getMyOrders,
    getOrders,
    updateOrderToDelivered,
+   getTodayOrders,
 };

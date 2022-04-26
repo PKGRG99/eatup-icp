@@ -18,6 +18,9 @@ import {
    ORDER_DELIVER_REQUEST,
    ORDER_DELIVER_SUCCESS,
    ORDER_DELIVER_FAIL,
+   ORDER_TODAY_LIST_REQUEST,
+   ORDER_TODAY_LIST_SUCCESS,
+   ORDER_TODAY_LIST_FAIL,
 } from "../constants/orderConstants";
 import { logout } from "./userActions";
 
@@ -288,6 +291,43 @@ export const payOrder = (order) => async (dispatch, getState) => {
       }
       dispatch({
          type: ORDER_PAY_FAIL,
+         payload: message,
+      });
+   }
+};
+
+export const listTodayOrders = () => async (dispatch, getState) => {
+   try {
+      dispatch({
+         type: ORDER_TODAY_LIST_REQUEST,
+      });
+
+      const {
+         userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+         headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+         },
+      };
+
+      const { data } = await axios.get(`/api/orders/today`, config);
+
+      dispatch({
+         type: ORDER_TODAY_LIST_SUCCESS,
+         payload: data,
+      });
+   } catch (error) {
+      const message =
+         error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+      if (message === "Not authorized, token failed") {
+         dispatch(logout());
+      }
+      dispatch({
+         type: ORDER_TODAY_LIST_FAIL,
          payload: message,
       });
    }

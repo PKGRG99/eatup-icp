@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Row, Col, Button, Table } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { listOrders } from "../actions/orderActions";
+import { listTodayOrders } from "../actions/orderActions";
 import Message from "../components/Message";
 import { ImCross } from "react-icons/im";
 import Loader from "../components/Loader";
@@ -12,15 +12,15 @@ const AdminScreen = () => {
    const dispatch = useDispatch();
    let history = useNavigate();
 
-   const orderList = useSelector((state) => state.orderList);
-   const { loading, error, orders } = orderList;
+   const orderListToday = useSelector((state) => state.orderListToday);
+   const { loading, error, orders } = orderListToday;
 
    const userLogin = useSelector((state) => state.userLogin);
    const { userInfo } = userLogin;
 
    useEffect(() => {
       if (userInfo && userInfo.isAdmin) {
-         dispatch(listOrders());
+         dispatch(listTodayOrders());
       } else {
          history("/login");
       }
@@ -46,7 +46,7 @@ const AdminScreen = () => {
             </Col>
             <Col md={10} className='my-3'>
                <>
-                  <h2 className='my-3'>ORDERS</h2>
+                  <h2 className='my-3'>ORDERS TODAY</h2>
                   {loading ? (
                      <Loader />
                   ) : error ? (

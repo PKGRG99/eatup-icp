@@ -29,7 +29,7 @@ const AdminScreen = () => {
    return (
       <>
          <Row>
-            <Col md={3} className='my-3 d-flex flex-column'>
+            <Col md={2} className='my-3 d-flex flex-column'>
                <h2 className='p-3'>Welcome, Admin.</h2>
                <Link className='btn btn-dark m-3' to='/admin/homepage'>
                   Home
@@ -44,7 +44,7 @@ const AdminScreen = () => {
                   Products
                </Link>
             </Col>
-            <Col md={9} className='my-3'>
+            <Col md={10} className='my-3'>
                <>
                   <h2 className='my-3'>ORDERS</h2>
                   {loading ? (

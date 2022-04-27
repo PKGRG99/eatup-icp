@@ -15,7 +15,7 @@ const PaymentScreen = () => {
       history("/shipping");
    }
 
-   const [paymentMethod, setPaymentMethod] = useState("eSewa");
+   const [paymentMethod, setPaymentMethod] = useState("khalti");
 
    const dispatch = useDispatch();
 
